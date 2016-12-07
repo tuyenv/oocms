@@ -1,0 +1,9 @@
+app:
+    resource: "@CoreBundle/Controller/"
+    type:     annotation
+demo:
+    resource: "@DemoBundle/Controller/"
+    type:     annotation
+extend:
+    resource: "@ExtendBundle/Controller/"
+    type:     annotation

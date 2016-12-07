@@ -1,0 +1,10 @@
+{% extends '@system/page--error.html.twig' %}
+
+{% block title %}
+    {{ exception.statusCode }}
+{% endblock %}
+{% block content %}
+    <p>
+        {{ exception.message }}
+    </p>
+{% endblock %}

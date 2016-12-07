@@ -1,0 +1,90 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+    encoders:
+        CoreBundle\Entity\User: sha512
+        CoreBundle\Entity\AdminUser: sha512
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory:
+            memory: ~
+        user_provider:
+            entity:
+                class: CoreBundle:User
+        admin_user_provider:
+            entity:
+                class: CoreBundle:AdminUser
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        #main:
+        #    anonymous: ~
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+        admin_login:
+            # logout: ~
+            pattern:   ^/admin
+            anonymous: ~
+            provider: admin_user_provider
+            remember_me:
+                secret: '%secret%'
+                name: "_a_u_"
+                always_remember_me: true
+                lifetime: 604800 # 1 week in seconds
+                path: /
+            form_login:
+                login_path: admin_login_page
+                check_path: admin_login_page
+                always_use_default_target_path: false
+                default_target_path: /admin
+                target_path_parameter: _target_path
+                use_referer: true
+                failure_path: /admin/login
+                failure_forward: false
+                failure_path_parameter: _failure_path
+                #csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: /admin/logout
+                target: /admin
+                invalidate_session: true
+                delete_cookies:
+            guard:
+                authenticators:
+                    - app.token_authenticator
+        user_login:
+            pattern: ^/
+            anonymous: ~
+            provider: user_provider
+            remember_me:
+                secret: '%secret%'
+                name: "_u_"
+                always_remember_me: true
+                lifetime: 604800 # 1 week in seconds
+                path: /
+            form_login:
+                login_path: user_login_page
+                check_path: user_login_check_page
+                always_use_default_target_path: true
+                default_target_path: /user/login-success
+                target_path_parameter: _target_path
+                use_referer: true
+                failure_path: /user/login-fail
+                failure_forward: false
+                failure_path_parameter: _failure_path
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: /user/logout
+                target: /
+                invalidate_session: true
+                delete_cookies:
+            guard:
+                authenticators:
+                    - app.token_authenticator
