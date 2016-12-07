@@ -4,7 +4,7 @@ namespace CoreBundle\Action\Page;
 use CoreBundle\CoreFrontController;
 use Symfony\Component\HttpFoundation\Request;
 
-class HomeAction
+class IndexAction
 {
     public static function GET(CoreFrontController $_this, Request $request)
     {
@@ -41,7 +41,7 @@ class HomeAction
         $data['description'] = 'ahihi';
 
         return $_this->render(
-          '@front/page/home_page.html.twig',
+          '@front/page/index_page.html.twig',
           array(
             'data' => $data,
           )

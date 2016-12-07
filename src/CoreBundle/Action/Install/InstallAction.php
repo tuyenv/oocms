@@ -21,7 +21,7 @@ class InstallAction
 
         $adminUser = $_this->_getEntityByID('CoreBundle:AdminUser', 1);
         if ($adminUser) {
-            return $_this->redirectToRoute('home_page');
+            return $_this->redirectToRoute('index_page');
         }
         $installEntity = new InstallEntity();
 

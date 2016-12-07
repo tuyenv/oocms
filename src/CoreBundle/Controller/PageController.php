@@ -14,6 +14,6 @@ class PageController extends CoreFrontController
      */
     public function indexAction(Request $request)
     {
-        return \CoreBundle\Action\Page\HomeAction::GET($this, $request);
+        return \CoreBundle\Action\Page\IndexAction::GET($this, $request);
     }
 }
