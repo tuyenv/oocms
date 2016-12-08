@@ -1,13 +1,15 @@
 {% extends '@front/base.html.twig' %}
 
 {% block page_title %}
+
     <title>{{ page_title??'...' }} | {{ site_name??'...' }}</title>
 {% endblock %}
 
 {% block meta_tags %}
     {% if meta_tags is defined %}
         {% for key,value in meta_tags %}
-            <meta name="{{ key }}" content="{{ value }}">{% endfor %}
+
+    <meta name="{{ key }}" content="{{ value }}">{% endfor %}
     {% endif %}
 
 {% endblock %}

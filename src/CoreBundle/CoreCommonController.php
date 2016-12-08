@@ -15,6 +15,11 @@ use Symfony\Component\Yaml\Yaml;
 class CoreCommonController extends Controller
 {
 
+    public function _url($url)
+    {
+
+    }
+
     public function _updateFriendlyUrl($source, $alias, $langcode = '')
     {
         $currentFriendlyUrlEntity = $this->_getEntityByConditions('CoreBundle:FriendlyUrl', array('source' => $source));
