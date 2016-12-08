@@ -1,5 +1,7 @@
 {% extends '@admin/base.html.twig' %}
-
+{% block page_title %}
+    <title>{{ page_title??'..' }}</title>
+{% endblock %}
 {% block page %}
 
     <div class="wrapper">

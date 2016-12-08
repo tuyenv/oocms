@@ -20,6 +20,8 @@ class AdminAction
             return $_this->_error403AdminAction();
         }
 
+        $_this->_setPageTitle('Admin - Dashboard');
+
         $data = array();
 
         return $_this->render(
