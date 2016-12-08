@@ -11,7 +11,7 @@ class NodeDetailAction
 
         $detailEntity = $_this->_getEntityByID('CoreBundle:Node', $nodeId);
         if(!$detailEntity) {
-            return $_this->_error403Action($request);
+            return $_this->_error404Action($request);
         }
 
         $nodeTitle = $detailEntity->getTitle();
