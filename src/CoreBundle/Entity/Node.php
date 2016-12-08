@@ -271,4 +271,18 @@ class Node
     {
         return $this->status;
     }
+
+
+    private $friendlyUrl = '';
+
+    public function setFriendlyUrl($friendlyUrl)
+    {
+        return $this->friendlyUrl = $friendlyUrl;
+    }
+
+    public function getFriendlyUrl()
+    {
+
+        return $this->friendlyUrl;
+    }
 }

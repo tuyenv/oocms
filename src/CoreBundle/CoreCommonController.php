@@ -3,6 +3,7 @@
 namespace CoreBundle;
 
 
+use CoreBundle\Entity\FriendlyUrl;
 use CoreBundle\Entity\SystemConfig;
 use CoreBundle\Utility\Pager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,6 +14,23 @@ use Symfony\Component\Yaml\Yaml;
 
 class CoreCommonController extends Controller
 {
+
+    public function _updateFriendlyUrl($source, $alias, $langcode = '')
+    {
+        $currentFriendlyUrlEntity = $this->_getEntityByConditions('CoreBundle:FriendlyUrl', array('source' => $source));
+        if ($currentFriendlyUrlEntity) {
+
+        } else {
+            $currentFriendlyUrlEntity = new FriendlyUrl();
+            $currentFriendlyUrlEntity->setSource($source);
+        }
+        $currentFriendlyUrlEntity->setAlias($alias);
+        $currentFriendlyUrlEntity->setLangcode($langcode);
+
+        $currentFriendlyUrlEntity = $this->_saveEntity($currentFriendlyUrlEntity);
+
+        return $currentFriendlyUrlEntity->getId();
+    }
 
     function _getSymfonyUrl($path)
     {
@@ -267,7 +285,8 @@ class CoreCommonController extends Controller
     }
 
     /* DB Queries */
-    public function _deleteEntityObj($entityObj) {
+    public function _deleteEntityObj($entityObj)
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $em->remove($entityObj);
         $em->flush();
@@ -358,7 +377,9 @@ class CoreCommonController extends Controller
 
     public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        return $this->container->get('router')->generate($route, $parameters, $referenceType);
+        $url = $this->container->get('router')->generate($route, $parameters, $referenceType);
+
+        return $url;
     }
 
     public function redirectToRoute($route, array $parameters = array(), $status = 302)

@@ -55,7 +55,7 @@ class AdminNodeAction
             $action_links = array();
             $action_links[] = array(
               'title' => 'Edit',
-              'link' => $_this->generateUrl('admin_menu_edit_page', array('menuId' => $value['id'])),
+              'link' => $_this->generateUrl('admin_node_edit_page', array('nodeId' => $value['id'])),
             );
             $tmp['action_link_list'] = $action_links;
             $items[] = $tmp;

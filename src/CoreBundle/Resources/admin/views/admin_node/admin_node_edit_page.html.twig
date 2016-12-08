@@ -39,6 +39,17 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-3">
+                            {{ form_label(data.admin_node_edit_form.friendlyUrl) }}
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group">
+                                {{ form_errors(data.admin_node_edit_form.friendlyUrl) }}
+                                {{ form_widget(data.admin_node_edit_form.friendlyUrl, {'attr': {'class':'form-control','placeholder':'Friendly Url'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3">
                             {{ form_label(data.admin_node_edit_form.summary) }}
                         </div>
                         <div class="col-xs-12 col-md-6">

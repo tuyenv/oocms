@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -38,8 +39,12 @@ class AdminNodeEditAction
         }
 
         $data = array();
+        $currentFriendlyUrlEntity = false;
         if ($entity = $_this->_getEntityByID('CoreBundle:Node', $nodeId)) {
-
+            $currentFriendlyUrlEntity = $_this->_getEntityByConditions('CoreBundle:FriendlyUrl', array('source' => '/node/'.$nodeId));
+            if ($currentFriendlyUrlEntity) {
+                $entity->setFriendlyUrl($currentFriendlyUrlEntity->getAlias());
+            }
         } else {
             $entity = new Node();
             $entity->setCreatedBy($userId);
@@ -57,14 +62,51 @@ class AdminNodeEditAction
 
 
         if ($form->isValid()) {
-            $entity->setUpdatedAt(time());
-            $entity->setUpdatedBy($userId);
-            $entity = $_this->_saveEntity($entity);
+            $hasAliasError = false;
+            $friendlyUrl = $entity->getFriendlyUrl();
+            if ($friendlyUrl) {
+                $friendlyUrlEntity = $_this->_getEntityByConditions('CoreBundle:FriendlyUrl', array('alias' => $friendlyUrl));
 
-            //$adminSettingForm->get('email')->addError(new FormError('Email is exist!'));
-            $_this->addFlash('success', 'Updated! Id = '.$entity->getId());
+                if ($friendlyUrlEntity) {
+                    if ($nodeId) {
+                        $source = '/node/'.$nodeId;
+                        // if user don't change anything
+                        if ($friendlyUrlEntity->getSource() == $source) {
+                            // do nothing
+                        } else {
+                            $hasAliasError = true;
+                        }
+                    }
+                }
+            } elseif ($currentFriendlyUrlEntity) {
+                $_this->addFlash('warning', 'Delete alias "'.$currentFriendlyUrlEntity->getAlias().'"');
+                $_this->_deleteEntityObj($currentFriendlyUrlEntity);
+            } else {
+                // do nothing
+            }
 
-            return $_this->redirectToRoute('admin_node_page');
+            if ($hasAliasError == false) {
+                $entity->setUpdatedAt(time());
+                $entity->setUpdatedBy($userId);
+                $entity = $_this->_saveEntity($entity);
+
+                //$adminSettingForm->get('email')->addError(new FormError('Email is exist!'));
+                if ($nodeId) {
+                    $_this->addFlash('success', 'Updated!');
+                } else {
+                    $nodeId = $entity->getId();
+                    $_this->addFlash('success', 'Inserted! New ID = '.$nodeId);
+                }
+                if ($friendlyUrl) {
+                    $_this->_updateFriendlyUrl('/node/'.$nodeId, $friendlyUrl);
+                }
+
+                return $_this->redirectToRoute('admin_node_page');
+            } else {
+                $form->get('friendlyUrl')->addError(new FormError('Friendly URL is not allow!'));
+            }
+
+
         }
         $data['admin_node_edit_form'] = $form->createView();
 
@@ -84,6 +126,7 @@ class AdminNodeEditForm extends AbstractType
     {
         $builder
           ->add('title', TextType::class, array('required' => true))
+          ->add('friendlyUrl', TextType::class, array('required' => false))
           ->add('summary', TextareaType::class, array('required' => true))
           ->add('body', TextareaType::class, array('required' => true))
           ->add(

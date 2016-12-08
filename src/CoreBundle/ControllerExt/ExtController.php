@@ -144,7 +144,7 @@ class ExtController extends CoreFrontController
                                 $arrParams[$key] = $value;
                             }
                         }
-                        
+
                         return $this->forward($_controller, $arrParams, $request->query->all());
                     }
 
