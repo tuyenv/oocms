@@ -29,21 +29,46 @@ class CoreAdminController extends CoreCommonController
           'items' => array(),
         );
         $link_list[] = array(
+          'title' => 'Admin Menus',
+          'link' => $this->generateUrl('admin_admin_menu_page'),
+          'type' => 1,
+          'items' => array(),
+        );
+        $link_list[] = array(
+          'title' => 'Contents',
+          'link' => $this->generateUrl('admin_node_page'),
+          'type' => 1,
+          'items' => array(),
+        );
+        $link_list[] = array(
           'title' => 'Settings',
           'link' => $this->generateUrl('admin_setting_page'),
           'type' => 1,
           'items' => array(),
         );
+
+        $menuList = $this->_executeDQL(
+          "SELECT m.id, m.name 
+        FROM CoreBundle:AdminMenu m
+        WHERE m.status = 1
+        ORDER BY m.weight ASC",
+          array()
+        );
+
+
         $parameters['admin_menu_list'] = array(
           array(
             'name' => 'Main',
             'link_list' => $link_list,
           ),
-          array(
-            'name' => 'Others',
-            'link_list' => $this->getSystemMenus(1, 0, 0, 2),
-          ),
         );
+        foreach ($menuList as $value) {
+            $parameters['admin_menu_list'][] = array(
+              'name' => $value['name'],
+              'link_list' => $this->getSystemMenus($value['id'], 0, 0, 2),
+            );
+        }
+
 
         if ($this->container->has('templating')) {
 
@@ -74,7 +99,7 @@ class CoreAdminController extends CoreCommonController
             FROM CoreBundle:AdminMenuLink ml
             WHERE ml.menuId = :menuId AND ml.parentLinkId = :parendLinkId AND ml.status = 1
             ORDER BY ml.weight ASC, ml.id ASC";
-        $arr = $this->_executeDQL($dql, array(':menuId' => 1, ':parendLinkId' => $parentId));
+        $arr = $this->_executeDQL($dql, array(':menuId' => $menuId, ':parendLinkId' => $parentId));
         $links = array();
         foreach ($arr as $value) {
             $path = $this->_getArrayValue($value, 'path', '');
@@ -100,7 +125,7 @@ class CoreAdminController extends CoreCommonController
               'title' => $this->_getArrayValue($value, 'title', ''),
               'link' => $pathUrl,
               'type' => $this->_getArrayValue($value, 'type', 0),
-              'items' => $this->getSystemMenus($menuId, $this->_getArrayValue($value, 'id', 0), $level++),
+              'items' => array(),//$this->getSystemMenus($menuId, $this->_getArrayValue($value, 'id', 0), $level++),
             );
 
         }
