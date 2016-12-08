@@ -36,9 +36,11 @@ twig:
     strict_variables: "%kernel.debug%"
     paths:
         "%kernel.root_dir%/..%front_theme_id%": front
-        "%kernel.root_dir%/../web/themes/core/default_front/views/": front
+        "%kernel.root_dir%/../src/ExtendBundle/Resources/front/views/": front
+        "%kernel.root_dir%/../src/CoreBundle/Resources/front/views/": front
         "%kernel.root_dir%/..%admin_theme_id%": admin
-        "%kernel.root_dir%/../web/themes/core/default_admin/views/": admin
+        "%kernel.root_dir%/../src/ExtendBundle/Resources/admin/views/": admin
+        "%kernel.root_dir%/../src/CoreBundle/Resources/admin/views/": admin
         "%kernel.root_dir%/../web/themes/core/system/views/": system
 # Doctrine Configuration
 doctrine:
