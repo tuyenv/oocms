@@ -57,7 +57,7 @@ class AdminAdminMenuLinkEditAction
             //$adminSettingForm->get('email')->addError(new FormError('Email is exist!'));
             $_this->addFlash('success', 'Updated! Id = '.$entity->getId());
 
-            return $_this->redirectToRoute('admin_menu_page');
+            return $_this->redirectToRoute('admin_admin_menu_page');
         }
         $data['admin_menu_link_edit_form'] = $form->createView();
 
