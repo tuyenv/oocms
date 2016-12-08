@@ -1,0 +1,72 @@
+{% extends '@front/page.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/web/themes/front/assets/css/pages/page_log_reg_v1.css') }}">
+    <link rel="stylesheet" href="{{ asset('/web/themes/front/css/user/user_login_page.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <!--=== Content Part ===-->
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+                <form class="reg-page" method="post" action="{{ path('user_login_check_page') }}">
+                    <div class="reg-header">
+                        <h2>Login to your account</h2>
+                    </div>
+
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input name="_username" type="text" placeholder="Username" class="form-control" required>
+                    </div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <input name="_password" type="password" placeholder="Password" class="form-control" required>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="row">
+                        <div class="col-md-6 checkbox">
+                            <label><input type="checkbox"> Stay signed in</label>
+                        </div>
+                        <div class="col-md-6">
+                            {% if data.use_ajax == 1 %}
+                                <input type="hidden" name="ajax" value="1">
+                            {% else %}
+                                <input type="hidden" name="ajax" value="0">
+                            {% endif %}
+                            <button class="btn-u pull-right" type="submit">Login</button>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h4>Forget your Password ?</h4>
+                    <p>no worries, <a class="color-green" href="{{ path('user_forgot_password_page') }}">click here</a> to reset your password.</p>
+                </form>
+            </div>
+        </div><!--/row-->
+    </div><!--/container-->
+    <!--=== End Content Part ===-->
+
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+    <!-- JS Customization -->
+    <script type="text/javascript" src="{{ asset('/web/themes/front/js/user/user_login_page.js') }}"></script>
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="{{ asset('/web/themes/front/assets/js/app.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            App.init();
+        });
+    </script>
+{% endblock %}
