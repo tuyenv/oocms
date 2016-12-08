@@ -1,0 +1,31 @@
+home_page:
+    css:
+        - 'assets/plugins/parallax-slider/css/parallax-slider.css'
+        - 'assets/plugins/owl-carousel/owl-carousel/owl.carousel.css'
+    js:
+        file:
+            - 'assets/plugins/parallax-slider/js/jquery.cslider.js'
+            - 'assets/plugins/smoothScroll.js'
+            - 'assets/plugins/parallax-slider/js/modernizr.js'
+            - 'assets/plugins/parallax-slider/js/jquery.cslider.js'
+            - 'assets/plugins/owl-carousel/owl-carousel/owl.carousel.js'
+            - 'assets/js/plugins/owl-carousel.js'
+        inline:
+            - 'OwlCarousel.initOwlCarousel();'
+            - 'StyleSwitcher.initStyleSwitcher();'
+            - 'ParallaxSlider.initParallaxSlider();'
+user_register_page:
+    css:
+        - 'assets/plugins/sky-forms-pro/skyforms/css/sky-forms.css'
+        - 'assets/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css'
+        - 'assets/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css'
+        - 'assets/css/pages/page_log_reg_v1.css'
+        - 'css/user/user_register_page.css'
+    js:
+        file:
+            - 'assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js'
+            - 'assets/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js'
+            - 'assets/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js'
+            - 'assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js'
+            - 'js/user/user_register_page.js'
+        inline:
