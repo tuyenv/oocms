@@ -15,33 +15,33 @@
                     {{ form_label(data.user_register_form.email) }}
                     {{ form_widget(data.user_register_form.email, {'attr': {'class':'form-control', 'placeholder':'Email address'}}) }}
                     {#{{ form_errors(data.user_register_form.email) }}#}
-                    {% if error_email %}
-                        <em for="user_register_form_email" class="invalid" style="display: block;">
+                    {#{% if error_email %}#}
+                        <em for="user_register_form_email" class="help-block" style="display: block;">
                             {{ error_email }}
                         </em>
-                    {% endif %}
+                    {#{% endif %}#}
                 </div>
 
                 <div class="form-group{% if error_password %} has-error{% endif %}">
                     {{ form_label(data.user_register_form.password.first) }}
                     {{ form_widget(data.user_register_form.password.first, {'attr': {'class':'form-control', 'placeholder':'Password'}}) }}
                     {#{{ form_errors(data.user_register_form.password.first) }}#}
-                    {% if error_password %}
-                        <em for="user_register_form_password" class="invalid" style="display: block;">
+                    {#{% if error_password %}#}
+                        <em for="user_register_form_password" class="help-block" style="display: block;">
                             {{ error_password }}
                         </em>
-                    {% endif %}
+                    {#{% endif %}#}
                 </div>
 
                 <div class="form-group{% if error_password2 %} has-error{% endif %}">
                     {{ form_label(data.user_register_form.password.second) }}
                     {{ form_widget(data.user_register_form.password.second, {'attr': {'class':'form-control', 'placeholder':'Confirm Password'}}) }}
                     {#{{ form_errors(data.user_register_form.password.second) }}#}
-                    {% if error_password2 %}
-                        <em for="user_register_form_password" class="invalid" style="display: block;">
+                    {#{% if error_password2 %}#}
+                        <em for="user_register_form_password" class="help-block" style="display: block;">
                             {{ error_password2 }}
                         </em>
-                    {% endif %}
+                    {#{% endif %}#}
                 </div>
 
                 {% if data.use_ajax == 1 %}
