@@ -33,7 +33,7 @@ class AdminMenuEditAction
 
         } else {
             $entity = new Menu();
-            $entity->getCreatedAt(time());
+            $entity->setCreatedAt(time());
             $entity->setStatus(1);
             $entity->setWeight(0);
         }
