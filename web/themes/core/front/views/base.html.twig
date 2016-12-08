@@ -9,8 +9,11 @@
     <meta name="author" content="">
     <link rel="icon" href="/web/themes/core/front/dist/favicon.ico">
 
-    <title>Narrow Jumbotron Template for Bootstrap</title>
-
+    {% block page_title %}
+        <title>...</title>
+    {% endblock %}
+    {% block meta_tags %}
+    {% endblock %}
     <!-- Bootstrap core CSS -->
     <link href="/web/themes/core/front/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,7 +22,11 @@
 
     <!-- Custom styles for this template -->
     <link href="/web/themes/core/front/dist/css/jumbotron-narrow.css" rel="stylesheet">
+    {{ (styles??'')|raw }}
 
+    <!-- CSS Page Style -->
+    {% block stylesheets %}
+    {% endblock %}
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
     <script src="/web/themes/core/front/dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -37,6 +44,10 @@
 {% block page %}
 {% endblock %}
 
+{{ (scripts??'')|raw }}
+{% block javascripts %}
+
+{% endblock %}
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/web/themes/core/front/dist/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
