@@ -46,7 +46,7 @@ class InstallAction
             $adminUser->setCreatedAt(time());
 
             if ($adminUser = $_this->_saveEntity($adminUser)) {
-                return $_this->redirectToRoute('home_page');
+                return $_this->redirectToRoute('index_page');
             } else {
                 return new Response('<h1>Error!</h1>');
             }

@@ -23,8 +23,9 @@ class IndexAction
                         $arrParams[$key] = $value;
                     }
                 }
-
-                return $_this->forward($_controller, $arrParams, $request->query->all());
+                if($_route != 'index_page') {
+                    return $_this->forward($_controller, $arrParams, $request->query->all());
+                }
             } catch (\Exception $e) {
             }
         }
