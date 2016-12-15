@@ -19,3 +19,5 @@
 #/web/themes/custom/
 /src/DemoBundle/Controller/*.php
 /web/uploads/
+.sonar
+sonar-project.properties

@@ -4,10 +4,27 @@ namespace CoreBundle;
 
 
 use CoreBundle\Entity\SystemConfig;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CoreAdminController extends CoreCommonController
 {
+
+    public function _adminError403Action(Request $request)
+    {
+        return \CoreBundle\Action\AdminError\AdminError403Action::GET($this, $request);
+    }
+
+    public function _adminError404Action(Request $request)
+    {
+        return \CoreBundle\Action\AdminError\AdminError404Action::GET($this, $request);
+    }
+
+    public function _adminError500Action(Request $request, $error)
+    {
+        return \CoreBundle\Action\AdminError\AdminError500Action::GET($this, $request, $error);
+    }
+
     public function render($view, array $parameters = array(), Response $response = null)
     {
         $request = $this->container->get('request');

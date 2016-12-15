@@ -27,7 +27,7 @@ class AdminMenuLinkEditAction
 
         //access denied
         if (!$_this->isGranted('ROLE_SUPER_ADMIN')) {
-            return $_this->_error403AdminAction();
+            return $_this->_adminError403Action();
         }
 
         $data = array();

@@ -6,6 +6,7 @@ namespace CoreBundle\ControllerExt;
 use CoreBundle\CoreFrontController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExtController extends CoreFrontController
 {
@@ -89,7 +90,6 @@ class ExtController extends CoreFrontController
         $request = $this->container->get('request');
         $curLocale = $request->getLocale();
         $defaultLanguage = 'en';
-        //$arrLanaguages = $this->_getAllLanguages('en');
         $arrLanguages = array(
           'en' => 'English',
           'vi' => 'Vietnamese',
@@ -109,33 +109,21 @@ class ExtController extends CoreFrontController
         try {
             $router = $this->get('router');
             $arr = $router->match($friendlyUrl);
+            $friendlyUrlEntity = $this->_getEntityByConditions('CoreBundle:FriendlyUrl', array('alias' => $friendlyUrl));
+            $_route = $this->_getArrayValue($arr, '_route');
+            $friendlyUrlList = array('friendly_url_1_page', 'friendly_url_2_page', 'friendly_url_3_page', 'friendly_url_4_page', 'friendly_url_5_page');
+            $_controller = $this->_getArrayValue($arr, '_controller');
+            if (in_array($_route, $friendlyUrlList)) {
 
-            $_route = $arr['_route'];
-            $_controller = $arr['_controller'];
-            if ($_route == 'friendly_url_1_page'
-              || $_route == 'friendly_url_2_page'
-              || $_route == 'friendly_url_3_page'
-              || $_route == 'friendly_url_4_page'
-              || $_route == 'friendly_url_5_page'
-            ) {
+                if ($friendlyUrlEntity) {
 
-
-
-                $friendlyUrlEntity = $this->_getEntityByConditions('CoreBundle:FriendlyUrl', array('alias' => $friendlyUrl));
-
-                if($friendlyUrlEntity) {
                     $friendlyUrl = $friendlyUrlEntity->getSource();
                     $router = $this->get('router');
                     $arr = $router->match($friendlyUrl);
 
-                    $_route = $arr['_route'];
-                    $_controller = $arr['_controller'];
-                    if ($_route == 'friendly_url_1_page'
-                      || $_route == 'friendly_url_2_page'
-                      || $_route == 'friendly_url_3_page'
-                      || $_route == 'friendly_url_4_page'
-                      || $_route == 'friendly_url_5_page'
-                    ) {
+                    $_route = $this->_getArrayValue($arr, '_route');
+                    $_controller = $this->_getArrayValue($arr, '_controller');
+                    if (in_array($_route, $friendlyUrlList)) {
                         // do nothing
                     } else {
                         $arrParams = array();
@@ -152,15 +140,14 @@ class ExtController extends CoreFrontController
 
                 if (
                   strstr($friendlyUrl, '/_wdt/', true) !== false
-                  || strstr($friendlyUrl, '/_wdt/', true) !== false
                   || strstr($friendlyUrl, '.jpg', true) !== false
                   || strstr($friendlyUrl, '.css', true) !== false
                   || strstr($friendlyUrl, '.js', true) !== false
                   || strstr($friendlyUrl, 'profile', true) !== false
                 ) {
                     header("HTTP/1.0 404 Not Found");
-                    print '';
-                    die;
+
+                    return new Response('');
                 }
 
                 return $this->_error404Action($request);
