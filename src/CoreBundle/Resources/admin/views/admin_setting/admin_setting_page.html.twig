@@ -15,76 +15,78 @@
 
     <!-- Main content -->
     <section class="content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Setting</h3>
-                </div>
-                {{ form_start(data.admin_setting_form) }}
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-3">
-                            {{ form_label(data.admin_setting_form.siteTitle) }}
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <div class="form-group">
-                                {{ form_errors(data.admin_setting_form.siteTitle) }}
-                                {{ form_widget(data.admin_setting_form.siteTitle, {'attr': {'class':'form-control','placeholder':'Peertal'}}) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Setting</h3>
+                    </div>
+                    {{ form_start(data.admin_setting_form) }}
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">
+                                {{ form_label(data.admin_setting_form.siteTitle) }}
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    {{ form_errors(data.admin_setting_form.siteTitle) }}
+                                    {{ form_widget(data.admin_setting_form.siteTitle, {'attr': {'class':'form-control','placeholder':'Peertal'}}) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-3">
-                            {{ form_label(data.admin_setting_form.siteMetaDescription) }}
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <div class="form-group">
-                                {{ form_errors(data.admin_setting_form.siteMetaDescription) }}
-                                {{ form_widget(data.admin_setting_form.siteMetaDescription, {'attr': {'class':'form-control','placeholder':'Site meta description'}}) }}
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">
+                                {{ form_label(data.admin_setting_form.siteMetaDescription) }}
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    {{ form_errors(data.admin_setting_form.siteMetaDescription) }}
+                                    {{ form_widget(data.admin_setting_form.siteMetaDescription, {'attr': {'class':'form-control','placeholder':'Site meta description'}}) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-3">
-                            {{ form_label(data.admin_setting_form.siteHomePage) }}
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <div class="form-group">
-                                {{ form_errors(data.admin_setting_form.siteHomePage) }}
-                                {{ form_widget(data.admin_setting_form.siteHomePage, {'attr': {'class':'form-control','placeholder':'Site home page'}}) }}
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">
+                                {{ form_label(data.admin_setting_form.siteHomePage) }}
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    {{ form_errors(data.admin_setting_form.siteHomePage) }}
+                                    {{ form_widget(data.admin_setting_form.siteHomePage, {'attr': {'class':'form-control','placeholder':'Site home page'}}) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {#<div class="row">#}
+                        {#<div class="row">#}
                         {#<div class="col-xs-12 col-md-3">#}
-                            {#{{ form_label(data.admin_setting_form.sendEmailWhenCommenting) }}#}
+                        {#{{ form_label(data.admin_setting_form.sendEmailWhenCommenting) }}#}
                         {#</div>#}
                         {#<div class="col-xs-12 col-md-6">#}
-                            {#<div class="form-group">#}
-                                {#{{ form_errors(data.admin_setting_form.sendEmailWhenCommenting) }}#}
-                                {#<div class="icheckbox_minimal-blue">#}
-                                    {#{{ form_widget(data.admin_setting_form.sendEmailWhenCommenting, {'attr': {'class':'minimal'}}) }}#}
-                                {#</div>#}
-                            {#</div>#}
+                        {#<div class="form-group">#}
+                        {#{{ form_errors(data.admin_setting_form.sendEmailWhenCommenting) }}#}
+                        {#<div class="icheckbox_minimal-blue">#}
+                        {#{{ form_widget(data.admin_setting_form.sendEmailWhenCommenting, {'attr': {'class':'minimal'}}) }}#}
                         {#</div>#}
-                    {#</div>#}
-                </div>
-                <div class="box-footer clearfix">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-primary pull-right">Update</button>
+                        {#</div>#}
+                        {#</div>#}
+                        {#</div>#}
+                    </div>
+                    <div class="box-footer clearfix">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                            </div>
                         </div>
                     </div>
+                    {{ form_end(data.admin_setting_form) }}
                 </div>
-                {{ form_end(data.admin_setting_form) }}
+
             </div>
+            <!-- /.col -->
 
         </div>
-        <!-- /.col -->
-
-    </div>
+    </section>
     <!-- /.row -->
+
 
 {% endblock %}
