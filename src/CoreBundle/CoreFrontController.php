@@ -30,6 +30,8 @@ class CoreFrontController extends CoreCommonController
 
     public function render($view, array $parameters = array(), Response $response = null)
     {
+        $siteSettings = $this->_initVariables();
+
         $request = $this->container->get('request');
         $routeName = $request->get('_route');
 
@@ -38,6 +40,7 @@ class CoreFrontController extends CoreCommonController
         $parameters['site_name'] = $this->_variableGet('SITE_TITLE');
         $parameters['page_title'] = $this->_getPageTitle();
         $parameters['meta_tags'] = $this->_getMetaTags();
+        $parameters['settings'] = $siteSettings;
 
         global $scripts;
         if (!isset($scripts['file'])) {
@@ -118,7 +121,7 @@ class CoreFrontController extends CoreCommonController
         $footer = '';
         $frontThemeId = $this->_getConfigValue('front_theme_id');
         $pathToTheme = $this->_getRootPath().$frontThemeId.'';
-
+        $siteSettings = $this->_initVariables();
         // add header
         $headerFilePath = $pathToTheme.'/config/header.yml';
         $arrInfo = $this->_getYamlValueFromFile($headerFilePath, array());
@@ -146,8 +149,9 @@ class CoreFrontController extends CoreCommonController
                 $templateFile = '@front/'.$template;
                 $data = array();
                 $data['menus'] = $menus;
+                $data['settings'] = $siteSettings;
 
-                $header = $this->renderView($templateFile, $data);
+                $header = $this->renderView($templateFile, array('data' => $data));
             }
             break;
         }
@@ -175,9 +179,10 @@ class CoreFrontController extends CoreCommonController
             }
             $data = array();
             $data['menus'] = $menus;
+            $data['settings'] = $siteSettings;
             if ($template) {
                 $templateFile = '@front/'.$template;
-                $footer = $this->renderView($templateFile, $data);
+                $footer = $this->renderView($templateFile, array('data' => $data));
             }
             break;
         }
