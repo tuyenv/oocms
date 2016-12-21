@@ -50,9 +50,9 @@ class CoreFrontController extends CoreCommonController
             $scripts['inline'] = array();
         }
 
-        $parameters['scripts'] = $this->renderView('@front/common/scripts.html.twig', array('scripts' => $scripts));
+        $parameters['scripts'] = $this->renderView('@front/common/scripts.html.twig', array('scripts' => $scripts, 'settings' => $siteSettings));
         global $styles;
-        $parameters['styles'] = $this->renderView('@front/common/styles.html.twig', array('styles' => $styles));
+        $parameters['styles'] = $this->renderView('@front/common/styles.html.twig', array('styles' => $styles, 'settings' => $siteSettings));
 
         if ($this->container->has('templating')) {
 
