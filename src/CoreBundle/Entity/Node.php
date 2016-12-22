@@ -31,6 +31,13 @@ class Node
     /**
      * @var string
      *
+     * @ORM\Column(name="content_type", type="string", length=255)
+     */
+    private $contentType;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="summary", type="string", length=500, nullable=true)
      */
     private $summary;
@@ -109,6 +116,29 @@ class Node
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set contentType
+     *
+     * @param string $contentType
+     * @return Node
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    /**
+     * Get contentType
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
     }
 
     /**
