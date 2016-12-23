@@ -64,6 +64,13 @@ class Term
     private $updatedAt;
 
     /**
+     * @var weight
+     *
+     * @ORM\Column(name="weight", type="integer")
+     */
+    private $weight;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="status", type="smallint")
@@ -217,6 +224,29 @@ class Term
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $weight
+     * @return Term
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 
     /**

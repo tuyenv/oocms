@@ -51,12 +51,12 @@ class CoreAdminController extends CoreCommonController
           'type' => 1,
           'items' => array(),
         );
-        $link_list[] = array(
-          'title' => 'Contents',
-          'link' => $this->generateUrl('admin_node_page'),
-          'type' => 1,
-          'items' => array(),
-        );
+//        $link_list[] = array(
+//          'title' => 'Contents',
+//          'link' => $this->generateUrl('admin_node_page'),
+//          'type' => 1,
+//          'items' => array(),
+//        );
         $link_list[] = array(
           'title' => 'Settings',
           'link' => $this->generateUrl('admin_setting_page'),

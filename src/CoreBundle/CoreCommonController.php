@@ -4,6 +4,7 @@ namespace CoreBundle;
 
 
 use CoreBundle\Entity\FriendlyUrl;
+use CoreBundle\Entity\NodeTerm;
 use CoreBundle\Entity\SystemConfig;
 use CoreBundle\Utility\Pager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +15,90 @@ use Symfony\Component\Yaml\Yaml;
 
 class CoreCommonController extends Controller
 {
+
+    public function _updateNodeTerms($nodeId, $termIds = array())
+    {
+
+
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        $q = $qb->update('CoreBundle:NodeTerm', 'nt')
+          ->set('nt.status', $qb->expr()->literal(0))
+          ->where('nt.nodeId = :nodeId')
+          ->setParameter('nodeId', $nodeId)
+          ->getQuery();
+        $p = $q->execute();
+
+
+        foreach ($termIds as $termId) {
+            $nodeTermEntity = $this->_getEntityByConditions(
+              'CoreBundle:NodeTerm',
+              array(
+                'nodeId' => $nodeId,
+                'termId' => $termId,
+              )
+            );
+            if ($nodeTermEntity) {
+
+            } else {
+                $nodeTermEntity = new NodeTerm();
+                $nodeTermEntity->setNodeId($nodeId);
+                $nodeTermEntity->setTermId($termId);
+
+            }
+            $nodeTermEntity->setStatus(1);
+            $nodeTermEntity = $this->_saveEntity($nodeTermEntity);
+        }
+
+        return true;
+    }
+
+    public function _getSelectedTermIdsByNode($nodeId)
+    {
+        $arr = $this->_executeDQL(
+          "SELECT nt.termId 
+          FROM CoreBundle:NodeTerm nt 
+          WHERE nt.nodeId = :nodeId
+          AND nt.status = 1
+          ORDER BY nt.id",
+          array('nodeId' => $nodeId)
+        );
+        $options = array();
+        foreach ($arr as $value) {
+            $options[] = $value['termId'];
+        }
+
+        return $options;
+    }
+
+    public function _getAllTermOptionsByTaxonomyCode($taxonomyCode)
+    {
+        $arr = $this->_executeDQL(
+          "SELECT t.id, t.name 
+          FROM CoreBundle:Term t 
+          WHERE t.taxonomyCode = :taxonomyCode
+          ORDER BY t.weight ASC, t.id ASC",
+          array('taxonomyCode' => $taxonomyCode)
+        );
+        $options = array();
+        foreach ($arr as $value) {
+            $options[$value['id']] = $value['name'];
+        }
+
+        return $options;
+    }
+
+    public function _executeSQL($sql, $params)
+    {
+        $em = $this->getDoctrine()->getManager(); // ...or getEntityManager() prior to Symfony 2.1
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        foreach ($params as $key => $value) {
+            $statement->bindValue($key, $value);
+        }
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
 
     public function _url($url)
     {
@@ -326,6 +411,17 @@ class CoreCommonController extends Controller
         $em->flush();
 
         return $entity;
+    }
+
+
+    public function _updateDQL($dql, $params)
+    {
+        $query = $this->getDoctrine()->getManager()->createQuery($dql);
+        foreach ($params as $key => $value) {
+            $query = $query->setParameter($key, $value);
+        }
+
+        return $query->execute();
     }
 
     public function _executeDQL($dql, $params, $limit = 0)
