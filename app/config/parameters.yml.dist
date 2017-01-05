@@ -2,6 +2,7 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
+    database_driver:   dbo_mysql
     database_host:     127.0.0.1
     database_port:     ~
     database_name:     symfony
@@ -17,6 +18,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    default_timezone:  America/Los_Angeles
     front_theme_id:    /web/themes/core/front/views/
     admin_theme_id:    /web/themes/core/admin/views/
     system_theme_id:   /web/themes/core/system/views/
