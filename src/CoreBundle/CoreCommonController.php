@@ -3,8 +3,10 @@
 namespace CoreBundle;
 
 
+use CoreBundle\Entity\File;
 use CoreBundle\Entity\FriendlyUrl;
 use CoreBundle\Entity\NodeTerm;
+use CoreBundle\Entity\PageMeta;
 use CoreBundle\Entity\SystemConfig;
 use CoreBundle\Utility\Pager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,6 +17,88 @@ use Symfony\Component\Yaml\Yaml;
 
 class CoreCommonController extends Controller
 {
+    public function _getRootDir()
+    {
+        $rootDir = $this->get('kernel')->getRootDir();
+        $rootDir = rtrim($rootDir, '\app');
+        $rootDir = rtrim($rootDir, '/app');
+
+        return $rootDir;
+    }
+
+    public function _uploadFile($fileObj, $path = '')
+    {
+        $file = new File();
+        $file->upload($this->_getRootDir(), $fileObj);
+        $file->setCreatedBy(time());
+        $file->setStatus(1);
+        $file = $this->_saveEntity($file);
+
+        return $file->getId();
+    }
+
+    public function _loadFileById($fileId)
+    {
+        $currentImageFile = $this->_getEntityByID('CoreBundle:File', $fileId);
+        if ($currentImageFile) {
+            return $currentImageFile;
+        } else {
+            return null;
+        }
+    }
+
+    public function _deleteFile($fileId)
+    {
+        $entity = $this->_loadFileById($fileId);
+        if ($entity) {
+            $filePath = $entity->getFilePath();
+            if (file_exists($this->_getRootDir().'/'.$entity->getFilesDir().'/'.$filePath)) {
+                unlink($this->_getRootDir().'/'.$entity->getFilesDir().'/'.$filePath);
+            }
+            //unlink($this->_getRootDir().'/'.$entity->getThumbsDir().'/'.$entity->getId().'/*.*');
+            unlink($this->_getRootDir().'/'.$entity->getThumbsDir().'/'.$entity->getId());
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function _savePageMeta($pageId, $metaCode, $metaValue)
+    {
+        $pageMetaEntity = $this->_getEntityByConditions(
+          'CoreBundle:PageMeta',
+          array(
+            'pageId' => $pageId,
+            'metaCode' => $metaCode,
+          )
+        );
+        if ($pageMetaEntity) {
+
+        } else {
+            $pageMetaEntity = new PageMeta();
+            $pageMetaEntity->setPageId($pageId);
+            $pageMetaEntity->setMetaCode($metaCode);
+        }
+        $pageMetaEntity->setMetaValue($metaValue);
+        $pageMetaEntity = $this->_saveEntity($pageMetaEntity);
+
+        return $pageMetaEntity;
+    }
+
+    public function _getPageMetas($pageId)
+    {
+        $dql = "SELECT pm.metaCode, pm.metaValue
+            FROM CoreBundle:PageMeta pm
+            WHERE pm.pageId = :pageId";
+        $arr = $this->_executeDQL($dql, array('pageId' => $pageId));
+        $variables = array();
+        foreach ($arr as $value) {
+            $variables[$value['metaCode']] = $value['metaValue'];
+        }
+
+        return $variables;
+    }
 
     public function _updateNodeTerms($nodeId, $termIds = array())
     {
