@@ -276,8 +276,9 @@ class File
                   ->cropResize($width, $height)
                   ->save($root.'/'.$this->getThumbsDir().'/'.$id.'/'.$width.'x'.$height.'/'.$this->getFilePath(), 'guess', 100);
             }
+            $subFolder = $GLOBALS['_SERVER']['BASE'];
 
-            return '/'.$this->getThumbsDir().'/'.$id.'/'.$width.'x'.$height.'/'.$this->getFilePath();
+            return $subFolder.'/'.$this->getThumbsDir().'/'.$id.'/'.$width.'x'.$height.'/'.$this->getFilePath();
         }
 
         return false;

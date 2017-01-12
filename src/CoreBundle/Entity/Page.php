@@ -43,6 +43,13 @@ class Page
     private $summary;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="keywords", type="string", length=500, nullable=true)
+     */
+    private $keywords;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="created_by", type="integer", nullable=true)
@@ -155,6 +162,30 @@ class Page
     public function getSummary()
     {
         return $this->summary;
+    }
+
+
+    /**
+     * Set keywords
+     *
+     * @param string $keywords
+     * @return Page
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+
+        return $this;
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return string
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
     }
 
     /**

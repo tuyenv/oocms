@@ -23,4 +23,5 @@ parameters:
     admin_theme_id:    /web/themes/core/admin/views/
     system_theme_id:   /web/themes/core/system/views/
     ajax_user_register_page:   true
+    ajax_user_login_page: true
     redirect_after_login:   /user

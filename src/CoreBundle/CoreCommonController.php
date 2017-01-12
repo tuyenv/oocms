@@ -366,7 +366,7 @@ class CoreCommonController extends Controller
 
     public function _getRootPath()
     {
-        return $this->getRequest()->server->get('DOCUMENT_ROOT');
+        return $this->getRequest()->server->get('DOCUMENT_ROOT').$this->getRequest()->server->get('BASE');
     }
 
     public function _getArrayValue($arr, $key, $default = false)
