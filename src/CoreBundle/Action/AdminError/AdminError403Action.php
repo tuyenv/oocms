@@ -14,7 +14,7 @@ class AdminError403Action
         $data['description'] = 'Access Denied';
 
         $response = $_this->render(
-          '@front/admin_error/admin_error_403_page.html.twig',
+          '@admin/admin_error/admin_error_403_page.html.twig',
           array(
             'data' => $data,
           )

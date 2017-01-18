@@ -23,7 +23,7 @@ class AdminSettingAction
 
         //access denied
         if (!$_this->isGranted('ROLE_SUPER_ADMIN')) {
-            return $_this->_adminError403Action();
+            return $_this->_adminError403Action($request);
         }
 
         $data = array();

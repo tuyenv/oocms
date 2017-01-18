@@ -19,6 +19,16 @@ class AdminManagerNewAction
       CoreAdminController $_this,
       Request $request
     ) {
+        //access denied
+        if (!$_this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $_this->redirectToRoute('admin_login_page');
+        }
+
+        //access denied
+        if (!$_this->isGranted('ROLE_SUPER_ADMIN')) {
+            return $_this->_adminError403Action($request);
+        }
+
         $data = array();
 
         $adminManagerNewEntity = new AdminManagerNewEntity();
@@ -67,7 +77,7 @@ class AdminManagerNewAction
 
 
         }
-
+        $_this->_setPageTitle('Manager - Add new');
 
         return $_this->render(
           '@admin/admin_manager/admin_manager_new_page.html.twig',

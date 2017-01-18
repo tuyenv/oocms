@@ -16,11 +16,6 @@ class AdminNodeAction
             return $_this->redirectToRoute('admin_login_page');
         }
 
-        //access denied
-        if (!$_this->isGranted('ROLE_SUPER_ADMIN')) {
-            return $_this->_adminError403Action();
-        }
-
         $perPage = 10;
         $perPage = intval($request->query->get('length', $perPage));
         $currentPage = intval($request->query->get('page', 1));

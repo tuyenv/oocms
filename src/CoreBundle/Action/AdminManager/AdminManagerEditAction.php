@@ -20,6 +20,16 @@ class AdminManagerEditAction
       Request $request,
       $mangerId
     ) {
+        //access denied
+        if (!$_this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $_this->redirectToRoute('admin_login_page');
+        }
+
+        //access denied
+        if (!$_this->isGranted('ROLE_SUPER_ADMIN')) {
+            return $_this->_adminError403Action($request);
+        }
+
         $data = array();
         $entity = new AdminManagerEditEntity();
 
@@ -62,6 +72,7 @@ class AdminManagerEditAction
             }
         }
 
+        $_this->_setPageTitle('Manager - Edit');
 
         return $_this->render(
           '@admin/admin_manager/admin_manager_edit_page.html.twig',

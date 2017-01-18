@@ -25,11 +25,6 @@ class AdminMenuLinkEditAction
             return $_this->redirectToRoute('admin_login_page');
         }
 
-        //access denied
-        if (!$_this->isGranted('ROLE_SUPER_ADMIN')) {
-            return $_this->_adminError403Action();
-        }
-
         $data = array();
         if ($entity = $_this->_getEntityByID('CoreBundle:MenuLink', $linkId)) {
 

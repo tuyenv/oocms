@@ -108,6 +108,7 @@ class AdminManagerAction
           'pager' => $pager,
           'item_list' => $items,
         );
+        $_this->_setPageTitle('Managers');
 
         return $_this->render(
           '@admin/admin_manager/admin_manager_page.html.twig',

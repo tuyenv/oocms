@@ -19,6 +19,19 @@ class AdminManagerChangePasswordAction
       Request $request,
       $mangerId
     ) {
+        //access denied
+        if (!$_this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $_this->redirectToRoute('admin_login_page');
+        }
+        $currentUser = $_this->getId();
+        $currentUserId = $currentUser->getId();
+
+        //access denied
+        //if (!$_this->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($mangerId != $currentUserId) {
+            return $_this->_adminError403Action($request);
+        }
+
         $data = array();
         $entity = new AdminManagerChangePasswordEntity();
 
@@ -57,7 +70,7 @@ class AdminManagerChangePasswordAction
 
 
         }
-
+        $_this->_setPageTitle('Manager - Change password');
 
         return $_this->render(
           '@admin/admin_manager/admin_manager_change_password_page.html.twig',
