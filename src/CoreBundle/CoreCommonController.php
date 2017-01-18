@@ -17,6 +17,55 @@ use Symfony\Component\Yaml\Yaml;
 
 class CoreCommonController extends Controller
 {
+
+    public function _isJSON($string)
+    {
+        return is_string($string) && is_object(
+          json_decode($string)
+        ) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
+    }
+
+    public function _removeSpecialCharacters($str)
+    {
+        return preg_replace('/[^a-zA-Z0-9.]/s', '', $str);
+    }
+
+
+    public function _ctString($string)
+    {
+        $string = str_replace(
+          array('/', '\'', '"', ';', '<', '>', '?'),
+          '',
+          $string
+        );
+        $string = trim($string);
+
+        return htmlspecialchars($string);//htmlspecialchars
+    }
+
+    public function _ctInt($obj)
+    {
+        return intval($obj);
+    }
+
+    function _ctFloat($obj)
+    {
+        return floatval($obj);
+    }
+
+    function _isEmail($str)
+    {
+        // Remove all illegal characters from email
+        $str = filter_var($str, FILTER_SANITIZE_EMAIL);
+
+        // Validate e-mail
+        if (!filter_var($str, FILTER_VALIDATE_EMAIL) === false) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public function _getRootDir()
     {
         $rootDir = $this->get('kernel')->getRootDir();
