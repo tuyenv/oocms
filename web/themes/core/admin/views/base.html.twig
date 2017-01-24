@@ -25,6 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           apply the skin class to the body tag so the changes take effect.
     -->
     <link rel="stylesheet" href="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('/web/themes/core/admin/dist/css/skins/skin-blue.min.css') }}">
+    <link rel="stylesheet" href="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('/web/themes/core/admin/css/style.css') }}">
     {% block stylesheets %}
 
     {% endblock %}
@@ -63,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('/web/themes/core/admin/plugins/knob/jquery.knob.js') }}"></script>
 <!-- daterangepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-<script src="{{ asset('/web/themes/core/admin/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('/web/themes/core/admin/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- datepicker -->
 <script src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('/web/themes/core/admin/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <!-- Bootstrap WYSIHTML5 -->

@@ -36,39 +36,49 @@
                                 <th>Status</th>
                                 <th>Edit</th>
                             </tr>
-                            {% for item in data.items %}
-                                <tr>
-                                    <td>
-                                        <h4>{{ item.name }} <b>#{{ item.code }}</b></h4>
-                                        <ul>
-                                            {% for menu in item.menu_list %}
-                                                <li>
-                                                    <a href="{{ menu.link }}" target="_blank">{{ menu.title }}</a> (<a href="{{ menu.edit_link }}">Edit</a>)
-                                                    <ul>
-                                                        {% for sub_menu in menu.sub_menu_list %}
-                                                            <li>
-                                                                <a href="{{ sub_menu.link }}" target="_blank">{{ sub_menu.title }}</a> (<a href="{{ sub_menu.edit_link }}">Edit</a>)
-                                                            </li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                </li>
+                            {% if data.items|length > 0 %}
+                                {% for item in data.items %}
+                                    <tr>
+                                        <td>
+                                            <h4>{{ item.name }} <b>#{{ item.code }}</b></h4>
+                                            <ul>
+                                                {% for menu in item.menu_list %}
+                                                    <li>
+                                                        <a href="{{ menu.link }}" target="_blank">{{ menu.title }}</a> (<a href="{{ menu.edit_link }}">Edit</a>)
+                                                        <ul>
+                                                            {% for sub_menu in menu.sub_menu_list %}
+                                                                <li>
+                                                                    <a href="{{ sub_menu.link }}" target="_blank">{{ sub_menu.title }}</a> (<a href="{{ sub_menu.edit_link }}">Edit</a>)
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            {{ item.status }}
+                                        </td>
+                                        <td>
+                                            {% for menu in item.action_link_list %}
+                                                <a class="btn btn-edit"
+                                                   href="{{ menu.link }}">
+                                                    <i class="fa fa-edit"></i>
+                                                    {{ menu.title }}
+                                                </a>
                                             {% endfor %}
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        {{ item.status }}
-                                    </td>
-                                    <td>
-                                        {% for menu in item.action_link_list %}
-                                            <a class="btn btn-edit"
-                                               href="{{ menu.link }}">
-                                                <i class="fa fa-edit"></i>
-                                                {{ menu.title }}
-                                            </a>
-                                        {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="no-data">
+                                            No data!
+                                        </div>
                                     </td>
                                 </tr>
-                            {% endfor %}
+                            {% endif %}
                         </table>
 
                     </div>

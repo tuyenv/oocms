@@ -35,7 +35,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">User Search</h3>
+                        <h3 class="box-title">Filter</h3>
                     </div>
                     <form method="get">
                         <div class="box-body">
@@ -94,20 +94,30 @@
                                 <th>Registration Date</th>
                                 <th>Edit</th>
                             </tr>
-                            {% for item in data.items %}
+                            {% if data.items|length > 0 %}
+                                {% for item in data.items %}
+                                    <tr>
+                                        <td>{{ item.email }}</td>
+                                        <td>{{ item.status }}</td>
+                                        <td>{{ item.createdAt }}</td>
+                                        <td>
+                                            <a class="btn btn-edit"
+                                               href="{{ path('admin_user_edit_page',{'userId':item.id}) }}">
+                                                <i class="fa fa-edit"></i>
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
                                 <tr>
-                                    <td>{{ item.email }}</td>
-                                    <td>{{ item.status }}</td>
-                                    <td>{{ item.createdAt }}</td>
-                                    <td>
-                                        <a class="btn btn-edit"
-                                           href="{{ path('admin_user_edit_page',{'userId':item.id}) }}">
-                                            <i class="fa fa-edit"></i>
-                                            Edit
-                                        </a>
+                                    <td colspan="4">
+                                        <div class="no-data">
+                                            No data!
+                                        </div>
                                     </td>
                                 </tr>
-                            {% endfor %}
+                            {% endif %}
                         </table>
 
                     </div>
