@@ -28,7 +28,7 @@ class AdminUserAction
         $perPage = intval($request->query->get('length', $perPage));
         $currentPage = intval($request->query->get('page', 1));
         $dql = 'SELECT u.id, u.email, u.createdAt, u.status
-        FROM CoreBundle:User u
+        FROM CoreBundle:WebsiteUser u
         WHERE u.createdAt > :from
         AND u.createdAt < :to
         AND u.email LIKE :email
@@ -46,11 +46,10 @@ class AdminUserAction
 
 
         $dql = 'SELECT COUNT(u.id) AS total
-        FROM CoreBundle:User u
+        FROM CoreBundle:WebsiteUser u
         WHERE u.createdAt > :from
         AND u.createdAt < :to
-        AND u.email LIKE :email
-        ORDER BY u.createdAt DESC';
+        AND u.email LIKE :email';
         $result2 = $_this->_executeDQL(
           $dql,
           array(

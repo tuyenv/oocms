@@ -45,7 +45,7 @@ class UserForgotPasswordAction
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $tmpUser = $_this->_getEntityByConditions(
-                  'CoreBundle:User',
+                  'CoreBundle:WebsiteUser',
                   array(
                     'email' => $email,
                   )

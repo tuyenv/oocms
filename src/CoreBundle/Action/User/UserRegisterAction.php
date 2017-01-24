@@ -1,13 +1,12 @@
 <?php
 namespace CoreBundle\Action\User;
 
-use CoreBundle\Entity\User;
+use CoreBundle\Entity\WebsiteUser;
 use CoreBundle\CoreFrontController;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -63,7 +62,7 @@ class UserRegisterAction
         if ($userRegisterForm->isSubmitted()) {
             if ($userRegisterForm->isValid()) {
                 $tmpUser = $_this->_getEntityByConditions(
-                  'CoreBundle:User',
+                  'CoreBundle:WebsiteUser',
                   array(
                     'email' => $email,
                   )
@@ -74,7 +73,7 @@ class UserRegisterAction
                     $returnData['status'] = 0;
                     $returnData['message'] = 'Email is existed!';
                 } else {
-                    $user = new User();
+                    $user = new WebsiteUser();
                     $user->setUsername($email);
                     $user->setEmail($email);
                     $user->setPassword($_this->encodePassword($email, $password));
