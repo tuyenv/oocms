@@ -2,15 +2,15 @@
 # http://symfony.com/doc/current/book/security.html
 security:
     encoders:
-        CoreBundle\Entity\User: sha512
+        CoreBundle\Entity\WebsiteUser: sha512
         CoreBundle\Entity\AdminUser: sha512
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory:
             memory: ~
-        user_provider:
+        website_user_provider:
             entity:
-                class: CoreBundle:User
+                class: CoreBundle:WebsiteUser
         admin_user_provider:
             entity:
                 class: CoreBundle:AdminUser
@@ -58,11 +58,11 @@ security:
                 delete_cookies:
             guard:
                 authenticators:
-                    - app.token_authenticator
+                    - app.admin_token_authenticator
         user_login:
             pattern: ^/
             anonymous: ~
-            provider: user_provider
+            provider: website_user_provider
             remember_me:
                 secret: '%secret%'
                 name: "_u_"
@@ -87,4 +87,4 @@ security:
                 delete_cookies:
             guard:
                 authenticators:
-                    - app.token_authenticator
+                    - app.website_token_authenticator

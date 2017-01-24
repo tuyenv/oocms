@@ -8,10 +8,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * User
  *
- * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="CoreBundle\Repository\UserRepository")
+ * @ORM\Table(name="website_user")
+ * @ORM\Entity(repositoryClass="CoreBundle\Repository\WebsiteUserRepository")
  */
-class User implements UserInterface, \Serializable
+class WebsiteUser implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -79,7 +79,7 @@ class User implements UserInterface, \Serializable
      * Set username
      *
      * @param string $username
-     * @return User
+     * @return WebsiteUser
      */
     public function setUsername($username)
     {
@@ -102,7 +102,7 @@ class User implements UserInterface, \Serializable
      * Set email
      *
      * @param string $email
-     * @return User
+     * @return WebsiteUser
      */
     public function setEmail($email)
     {
@@ -125,7 +125,7 @@ class User implements UserInterface, \Serializable
      * Set password
      *
      * @param string $password
-     * @return User
+     * @return WebsiteUser
      */
     public function setPassword($password)
     {
@@ -148,7 +148,7 @@ class User implements UserInterface, \Serializable
      * Set createdAt
      *
      * @param integer $createdAt
-     * @return User
+     * @return WebsiteUser
      */
     public function setCreatedAt($createdAt)
     {
@@ -171,7 +171,7 @@ class User implements UserInterface, \Serializable
      * Set activedAt
      *
      * @param integer $activedAt
-     * @return User
+     * @return WebsiteUser
      */
     public function setActivedAt($activedAt)
     {
@@ -194,7 +194,7 @@ class User implements UserInterface, \Serializable
      * Set status
      *
      * @param integer $status
-     * @return User
+     * @return WebsiteUser
      */
     public function setStatus($status)
     {
