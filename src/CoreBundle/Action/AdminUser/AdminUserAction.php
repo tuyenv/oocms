@@ -94,6 +94,8 @@ class AdminUserAction
           'items' => $items,
         );
 
+        $_this->_setPageTitle('Users');
+
         return $_this->render(
           '@admin/admin_user/admin_user_page.html.twig',
           array(
