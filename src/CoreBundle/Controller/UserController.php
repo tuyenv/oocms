@@ -70,6 +70,15 @@ class UserController extends CoreFrontController
     }
 
     /**
+     * @Route("/user/social/{socialId}", name="user_social_detail_page")
+     */
+    public function userSocialDetailAction(Request $request, $socialId)
+    {
+        return \CoreBundle\Action\User\UserSocialDetailAction::GET($this, $request, $socialId);
+    }
+
+
+    /**
      * @Route("/user/forgot-password", name="user_forgot_password_page")
      */
     public function userForgotPasswordAction(Request $request)

@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new CoreBundle\CoreBundle(),
             new ExtendBundle\ExtendBundle(),
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+//            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

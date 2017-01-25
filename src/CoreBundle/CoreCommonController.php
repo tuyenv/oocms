@@ -21,7 +21,7 @@ class CoreCommonController extends Controller
     public function _isJSON($string)
     {
         return is_string($string) && is_object(
-          json_decode($string)
+            json_decode($string)
         ) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
     }
 
@@ -34,9 +34,9 @@ class CoreCommonController extends Controller
     public function _ctString($string)
     {
         $string = str_replace(
-          array('/', '\'', '"', ';', '<', '>', '?'),
-          '',
-          $string
+            array('/', '\'', '"', ';', '<', '>', '?'),
+            '',
+            $string
         );
         $string = trim($string);
 
@@ -116,11 +116,11 @@ class CoreCommonController extends Controller
     public function _savePageMeta($pageId, $metaCode, $metaValue)
     {
         $pageMetaEntity = $this->_getEntityByConditions(
-          'CoreBundle:PageMeta',
-          array(
-            'pageId' => $pageId,
-            'metaCode' => $metaCode,
-          )
+            'CoreBundle:PageMeta',
+            array(
+                'pageId' => $pageId,
+                'metaCode' => $metaCode,
+            )
         );
         if ($pageMetaEntity) {
 
@@ -155,20 +155,20 @@ class CoreCommonController extends Controller
 
         $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
         $q = $qb->update('CoreBundle:NodeTerm', 'nt')
-          ->set('nt.status', $qb->expr()->literal(0))
-          ->where('nt.nodeId = :nodeId')
-          ->setParameter('nodeId', $nodeId)
-          ->getQuery();
+            ->set('nt.status', $qb->expr()->literal(0))
+            ->where('nt.nodeId = :nodeId')
+            ->setParameter('nodeId', $nodeId)
+            ->getQuery();
         $p = $q->execute();
 
 
         foreach ($termIds as $termId) {
             $nodeTermEntity = $this->_getEntityByConditions(
-              'CoreBundle:NodeTerm',
-              array(
-                'nodeId' => $nodeId,
-                'termId' => $termId,
-              )
+                'CoreBundle:NodeTerm',
+                array(
+                    'nodeId' => $nodeId,
+                    'termId' => $termId,
+                )
             );
             if ($nodeTermEntity) {
 
@@ -188,12 +188,12 @@ class CoreCommonController extends Controller
     public function _getSelectedTermIdsByNode($nodeId)
     {
         $arr = $this->_executeDQL(
-          "SELECT nt.termId 
+            "SELECT nt.termId 
           FROM CoreBundle:NodeTerm nt 
           WHERE nt.nodeId = :nodeId
           AND nt.status = 1
           ORDER BY nt.id",
-          array('nodeId' => $nodeId)
+            array('nodeId' => $nodeId)
         );
         $options = array();
         foreach ($arr as $value) {
@@ -206,11 +206,11 @@ class CoreCommonController extends Controller
     public function _getAllTermOptionsByTaxonomyCode($taxonomyCode)
     {
         $arr = $this->_executeDQL(
-          "SELECT t.id, t.name 
+            "SELECT t.id, t.name 
           FROM CoreBundle:Term t 
           WHERE t.taxonomyCode = :taxonomyCode
           ORDER BY t.weight ASC, t.id ASC",
-          array('taxonomyCode' => $taxonomyCode)
+            array('taxonomyCode' => $taxonomyCode)
         );
         $options = array();
         foreach ($arr as $value) {
@@ -307,8 +307,8 @@ class CoreCommonController extends Controller
     function _variableSet($key, $value)
     {
         if ($currentSetting = $this->_getEntityByConditions(
-          'CoreBundle:SystemConfig',
-          array('name' => $key)
+            'CoreBundle:SystemConfig',
+            array('name' => $key)
         )
         ) {
             $currentSetting->setValue($value);
@@ -344,9 +344,9 @@ class CoreCommonController extends Controller
     }
 
     function _getReservationTime(
-      $reservation,
-      $default_from = 0,
-      $default_to = 0
+        $reservation,
+        $default_from = 0,
+        $default_to = 0
     ) {
         $data = new \stdClass();
         $data->reservation = '';
@@ -359,9 +359,9 @@ class CoreCommonController extends Controller
             $from_int = $this->_convertDateToInt($arr[0]);
             $to_int = $this->_convertDateToInt($arr[1]) + 1 * 24 * 60 * 60;
             $data->reservation = date('m/d/Y', $from_int).' - '.date(
-                'm/d/Y',
-                $from_int
-              );
+                    'm/d/Y',
+                    $from_int
+                );
             $data->from = $from_int;
             $data->to = $to_int;
         } else {
@@ -408,9 +408,13 @@ class CoreCommonController extends Controller
         }
     }
 
-    public function _getConfigValue($paramId)
+    public function _getConfigValue($paramId, $defaultValue = '')
     {
-        return $this->container->getParameter($paramId);
+        if ($this->container->hasParameter($paramId)) {
+            return $this->container->getParameter($paramId);
+        } else {
+            return $defaultValue;
+        }
     }
 
     public function _getRootPath()
@@ -422,6 +426,15 @@ class CoreCommonController extends Controller
     {
         if (isset($arr) && is_array($arr) && isset($arr[$key])) {
             return $arr[$key];
+        } else {
+            return $default;
+        }
+    }
+
+    public function _getObjectValue($obj, $key, $default = false)
+    {
+        if (isset($obj) && is_object($obj) && isset($obj->{$key})) {
+            return $obj->{$key};
         } else {
             return $default;
         }
@@ -445,9 +458,9 @@ class CoreCommonController extends Controller
         $current = explode('?', $request->getRequestUri())[0];
 
         return array(
-          'title' => $title,
-          'href' => $path,
-          'active' => $current == $path ? true : false,
+            'title' => $title,
+            'href' => $path,
+            'active' => $current == $path ? true : false,
         );
     }
 
@@ -524,17 +537,17 @@ class CoreCommonController extends Controller
     public function _getEntityByID($entity, $id)
     {
         return $this->getDoctrine()
-          ->getRepository($entity)
-          ->find($id);
+            ->getRepository($entity)
+            ->find($id);
     }
 
     public function _getEntityByConditions($entity, $conditions)
     {
         return $this->getDoctrine()
-          ->getRepository($entity)
-          ->findOneBy(
-            $conditions
-          );
+            ->getRepository($entity)
+            ->findOneBy(
+                $conditions
+            );
     }
 
     public function _saveEntity($entity)
@@ -571,10 +584,10 @@ class CoreCommonController extends Controller
     }
 
     public function _executePagerDQL(
-      $dql,
-      $params,
-      $itemsPerPage = 10,
-      $currentPage = 1
+        $dql,
+        $params,
+        $itemsPerPage = 10,
+        $currentPage = 1
     ) {
 
         $query = $this->getDoctrine()->getManager()->createQuery($dql);
@@ -583,7 +596,7 @@ class CoreCommonController extends Controller
         }
 
         $query->setFirstResult(($currentPage - 1) * $itemsPerPage)
-          ->setMaxResults($itemsPerPage);
+            ->setMaxResults($itemsPerPage);
 
         $arr = $query->getResult();
 

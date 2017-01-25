@@ -71,6 +71,6 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-ivory_ck_editor:
-    base_path: "/../web/bundles/ivoryckeditor"
-    js_path:   "/../web/bundles/ivoryckeditor/ckeditor.js"
+#ivory_ck_editor:
+#    base_path: "/../web/bundles/ivoryckeditor"
+#    js_path:   "/../web/bundles/ivoryckeditor/ckeditor.js"
