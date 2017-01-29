@@ -3,6 +3,7 @@
 namespace CoreBundle\Security;
 
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,12 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 class WebsiteUserTokenAuthenticator extends AbstractGuardAuthenticator
 {
+    private $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * Returns a response that directs the user to authenticate.
@@ -77,6 +84,12 @@ class WebsiteUserTokenAuthenticator extends AbstractGuardAuthenticator
             );
         }
 
+        if ($token = $request->query->get('_token')) {
+            return array(
+                'token' => $token,
+            );
+        }
+
         return null;
     }
 
@@ -97,7 +110,21 @@ class WebsiteUserTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        // TODO: Implement getUser() method.
+        $apiKey = $credentials['token'];
+
+        $userLogin = $this->em->getRepository('CoreBundle:WebsiteUser')
+            ->findOneBy(array('email' => 'dicoluat@gmail.com'));
+        if ($userLogin) {
+
+            //$email = $userLogin->getEmail();
+
+//            $user = $this->em->getRepository('PeertalBundle:PeertalUser')
+//                ->findOneBy(array('email' => $email));
+
+            return $userLogin;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -145,7 +172,9 @@ class WebsiteUserTokenAuthenticator extends AbstractGuardAuthenticator
             'message' => strtr(
                 $exception->getMessageKey(),
                 $exception->getMessageData()
-            )
+            ),
+            'key' => $exception->getMessageKey(),
+            'data' => $exception->getMessageData()
 
             // or to translate this message
             // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
@@ -175,6 +204,9 @@ class WebsiteUserTokenAuthenticator extends AbstractGuardAuthenticator
         $providerKey
     ) {
         // TODO: Implement onAuthenticationSuccess() method.
+        $data = array('status' => 1, 'message' => 'Success');
+
+        return new JsonResponse($data);
     }
 
     /**

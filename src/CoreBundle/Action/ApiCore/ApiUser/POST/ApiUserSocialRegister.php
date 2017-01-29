@@ -12,6 +12,9 @@ class ApiUserSocialRegister
 
     public static function POST(CoreCommonController $_this, Request $request)
     {
+        $returnData = array();
+
+
         $redirectUrl = $_this->generateUrl('index_page');
 
         $userString = $request->request->get('user', '');
@@ -30,6 +33,8 @@ class ApiUserSocialRegister
             $websiteUserEntity = $_this->_getEntityByConditions('CoreBundle:WebsiteUser', array('email' => $email));
             if ($websiteUserEntity) {
                 $redirectUrl = $_this->generateUrl('user_page', array());
+                $returnData['status'] = 1;
+                $returnData['message'] = 'Account is existed!';
             } else {
                 $websiteUserEntity = new WebsiteUser();
                 $websiteUserEntity->setCreatedAt(time());
@@ -40,15 +45,17 @@ class ApiUserSocialRegister
                 $websiteUserEntity->setPassword('unknown');
                 $websiteUserEntity = $_this->_saveEntity($websiteUserEntity);
 
-                $redirectUrl = $_this->generateUrl('user_page', array());
+
+                $returnData['status'] = 1;
+                $returnData['message'] = 'Added new account!';
             }
+
+            $redirectUrl = $_this->generateUrl('user_page', array('_token' => md5('bbb')));
         } else {
 
         }
 
-        $returnData = array();
-        $returnData['status'] = 1;
-        $returnData['message'] = 'Success';
+
 
         $data = array();
         $data['redirect_url'] = $redirectUrl;

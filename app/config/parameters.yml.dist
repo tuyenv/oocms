@@ -26,9 +26,9 @@ parameters:
     ajax_user_login_page: true
     redirect_after_login:   /user
 
-    #Firebase
-    firebase_api_key: ~
-    firebase_auth_domain: ~
-    firebase_database_url: ~
-    firebase_storage_bucket: ~
-    firebase_messaging_sender_id: ~
+    # Firebase
+    #firebase_api_key: ~
+    #firebase_auth_domain: ~
+    #firebase_database_url: ~
+    #firebase_storage_bucket: ~
+    #firebase_messaging_sender_id: ~
